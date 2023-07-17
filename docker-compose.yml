@@ -1,0 +1,24 @@
+version: "3.7"
+services:
+  # APP
+  app:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    volumes:
+      - .:/usr/src/app
+    ports:
+      - "3000:3000"
+    env_file: ./.env
+    stdin_open: true
+
+  # API
+  api:
+    build:
+      context: ../eshop
+      dockerfile: ./Dockerfile
+    volumes:
+      - ../eshop:/app
+    ports:
+      - "8000:8000"
+    stdin_open: true
