@@ -3,6 +3,7 @@
 import { Categories } from "./types";
 import Dropdown from "rsuite/Dropdown";
 import "rsuite/dist/rsuite.min.css";
+import Link from "next/link";
 
 interface ICategories {
   categories: Categories;
@@ -12,21 +13,32 @@ export default function ClientCategories({ categories }: ICategories) {
   return (
     <div className="w-full">
       <div>
-        {categories.map((category) => (
-          <Dropdown title={category.data.name}>
+        {categories.map((category, i) => (
+          <Dropdown key={`category-group-${i}`} title={category.data.name}>
             {category.children &&
-              category.children.map((child) => {
+              category.children.map((child, i) => {
                 return child.children ? (
-                  <Dropdown.Menu title={child.data.name}>
+                  <Dropdown.Menu
+                    key={`category-menu-${i}`}
+                    title={child.data.name}
+                  >
                     {child.children &&
                       child.children.map((child2) => {
                         return (
-                          <Dropdown.Item>{child2.data.name}</Dropdown.Item>
+                          <Dropdown.Item key={`category-${child2.id}`}>
+                            <Link href={`/categories/${child2.id}`}>
+                              {child2.data.name}
+                            </Link>
+                          </Dropdown.Item>
                         );
                       })}
                   </Dropdown.Menu>
                 ) : (
-                  <Dropdown.Item>{child.data.name}</Dropdown.Item>
+                  <Dropdown.Item key={`category-${child.id}`}>
+                    <Link href={`/categories/${child.id}`}>
+                      {child.data.name}
+                    </Link>
+                  </Dropdown.Item>
                 );
               })}
           </Dropdown>
