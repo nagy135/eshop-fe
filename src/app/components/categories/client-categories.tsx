@@ -26,7 +26,10 @@ export default function ClientCategories({ categories }: ICategories) {
                       child.children.map((child2) => {
                         return (
                           <Dropdown.Item key={`category-${child2.id}`}>
-                            <Link href={`/categories/${child2.id}`}>
+                            <Link
+                              className="hover:no-underline"
+                              href={`/categories/${child2.id}`}
+                            >
                               {child2.data.name}
                             </Link>
                           </Dropdown.Item>
@@ -35,7 +38,10 @@ export default function ClientCategories({ categories }: ICategories) {
                   </Dropdown.Menu>
                 ) : (
                   <Dropdown.Item key={`category-${child.id}`}>
-                    <Link href={`/categories/${child.id}`}>
+                    <Link
+                      className="hover:no-underline"
+                      href={`/categories/${child.id}`}
+                    >
                       {child.data.name}
                     </Link>
                   </Dropdown.Item>
