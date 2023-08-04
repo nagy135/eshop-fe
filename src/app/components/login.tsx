@@ -15,7 +15,7 @@ export default function Home() {
   );
 
   return (
-    <div className="flex flex-row-reverse mx-2">
+    <div className="flex flex-row-reverse mx-2 absolute top-0 right-0 text-gray-100">
       <div className="">{content}</div>
     </div>
   );
