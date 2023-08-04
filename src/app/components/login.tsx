@@ -1,12 +1,14 @@
 "use client";
 import { useSession, signIn, signOut } from "next-auth/react";
 
-export default function Home() {
+export default function Login() {
   const { data: session } = useSession();
   const content = session ? (
     <>
-      Signed in as {session?.user?.email} <br />
-      <button onClick={() => signOut()}>Sign out</button>
+      <button onClick={() => signOut()}>
+        Sign out <br />
+        {session?.user?.name}
+      </button>
     </>
   ) : (
     <>
@@ -16,7 +18,9 @@ export default function Home() {
 
   return (
     <div className="flex flex-row-reverse mx-2 absolute top-0 right-0 text-gray-100">
-      <div className="">{content}</div>
+      <div className="bg-gray-200/75 text-black p-1 rounded text-xs">
+        {content}
+      </div>
     </div>
   );
 }

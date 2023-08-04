@@ -11,7 +11,7 @@ interface ICategories {
 
 export default function ClientCategories({ categories }: ICategories) {
   return (
-    <div className="w-full">
+    <div className="w-full mt-2">
       <div>
         {categories.map((category, i) => (
           <Dropdown key={`category-group-${i}`} title={category.data.name}>
@@ -25,26 +25,26 @@ export default function ClientCategories({ categories }: ICategories) {
                     {child.children &&
                       child.children.map((child2) => {
                         return (
-                          <Dropdown.Item key={`category-${child2.id}`}>
-                            <Link
-                              className="hover:no-underline"
-                              href={`/categories/${child2.id}`}
-                            >
+                          <Link
+                            className="hover:no-underline"
+                            href={`/categories/${child2.id}`}
+                          >
+                            <Dropdown.Item key={`category-${child2.id}`}>
                               {child2.data.name}
-                            </Link>
-                          </Dropdown.Item>
+                            </Dropdown.Item>
+                          </Link>
                         );
                       })}
                   </Dropdown.Menu>
                 ) : (
-                  <Dropdown.Item key={`category-${child.id}`}>
-                    <Link
-                      className="hover:no-underline"
-                      href={`/categories/${child.id}`}
-                    >
+                  <Link
+                    className="hover:no-underline"
+                    href={`/categories/${child.id}`}
+                  >
+                    <Dropdown.Item key={`category-${child.id}`}>
                       {child.data.name}
-                    </Link>
-                  </Dropdown.Item>
+                    </Dropdown.Item>
+                  </Link>
                 );
               })}
           </Dropdown>

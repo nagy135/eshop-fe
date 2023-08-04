@@ -12,13 +12,13 @@ export default async function Banner() {
   const configuration = await getConfiguration();
   const bannerUrl = `http://api:8000/${configuration.banner}`;
   return (
-    <div className="relative">
-      <Link href={`/`}>
+    <div className="relative max-h-64">
+      <Link className="h-full" href={`/`}>
         <Image
           src={bannerUrl}
           width={500}
           height={500}
-          className="w-full max-h-64 object-cover"
+          className="w-full object-cover max-h-64 md:max-h-52"
           alt="Banner"
         />
         <div className="absolute bottom-3 right-3 text-2xl text-gray-200">
