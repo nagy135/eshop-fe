@@ -21,7 +21,7 @@ export default async function Banner() {
           className="w-full object-cover max-h-64 md:max-h-52"
           alt="Banner"
         />
-        <div className="absolute bottom-3 right-3 text-2xl text-gray-200">
+        <div className="absolute bottom-3 right-3 text-2xl font-bold text-gray-200">
           {configuration.title}
         </div>
       </Link>
