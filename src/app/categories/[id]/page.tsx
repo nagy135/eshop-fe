@@ -1,4 +1,4 @@
-import Items from "@/app/components/items";
+import Items from "@/app/components/items/items";
 
 interface IParams {
   id: number;

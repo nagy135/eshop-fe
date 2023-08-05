@@ -27,10 +27,9 @@ export default function ClientCategories({ categories }: ICategories) {
                         <Link
                           className="hover:no-underline"
                           href={`/categories/${child2.id}`}
+                          key={`category-${child2.id}`}
                         >
-                          <Dropdown.Item key={`category-${child2.id}`}>
-                            {child2.data.name}
-                          </Dropdown.Item>
+                          <Dropdown.Item>{child2.data.name}</Dropdown.Item>
                         </Link>
                       );
                     })}
@@ -39,10 +38,9 @@ export default function ClientCategories({ categories }: ICategories) {
                 <Link
                   className="hover:no-underline"
                   href={`/categories/${child.id}`}
+                  key={`category-${child.id}`}
                 >
-                  <Dropdown.Item key={`category-${child.id}`}>
-                    {child.data.name}
-                  </Dropdown.Item>
+                  <Dropdown.Item>{child.data.name}</Dropdown.Item>
                 </Link>
               );
             })}
