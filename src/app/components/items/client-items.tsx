@@ -1,12 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { Modal, Button, Placeholder } from "rsuite";
+import { Modal, Button } from "rsuite";
 import { Item } from "@/app/types";
+import { getItems } from "./items";
 
 interface IClientItems {
   items: Item[];
+  categoryId?: number;
 }
 
 type ModalState = {
@@ -17,18 +19,51 @@ const defaultModalState: ModalState = {
   item: null,
 };
 
-export default function ClientItems({ items }: IClientItems) {
+export default function ClientItems({ items, categoryId }: IClientItems) {
+  const [itemBag, setItemBag] = useState<Item[]>(items);
+  const [page, setPage] = useState(0);
   const [open, setOpen] = useState(false);
   const [modalState, setModalState] = useState(defaultModalState);
+
+  const observerTarget = useRef(null);
+
   const handleOpen = (item: Item) => {
     setModalState({ item });
     setOpen(true);
   };
   const handleClose = () => setOpen(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      async (entries) => {
+        if (entries[0].isIntersecting) {
+          const newItems = await getItems(
+            categoryId,
+            page + 1,
+            undefined,
+            true
+          );
+          setPage((p) => p + 1);
+          setItemBag((p) => [...p, ...newItems]);
+        }
+      },
+      { threshold: 1 }
+    );
+
+    if (observerTarget.current) {
+      observer.observe(observerTarget.current);
+    }
+
+    return () => {
+      if (observerTarget.current) {
+        observer.unobserve(observerTarget.current);
+      }
+    };
+  }, [observerTarget, page]);
   return (
     <>
-      <div className="container grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-16 sm:gap-4 sm:gap-y-8 sm:mx-auto px-4">
-        {items.map((item, i) => (
+      <div className="container relative grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-16 sm:gap-4 sm:gap-y-8 sm:mx-auto px-4">
+        {itemBag.map((item, i) => (
           <div
             key={`item-${i}`}
             onClick={() => handleOpen(item)}
@@ -54,6 +89,7 @@ export default function ClientItems({ items }: IClientItems) {
             </div>
           </div>
         ))}
+        <div className="absolute bottom-0 h-[300px]" ref={observerTarget}></div>
       </div>
       {!!modalState.item ? (
         <Modal open={open} onClose={handleClose}>
