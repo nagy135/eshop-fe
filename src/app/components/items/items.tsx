@@ -8,7 +8,7 @@ interface IItems {
 export const getItems = async (
   categoryId?: number,
   page: number = 0,
-  pageSize: number = 6,
+  pageSize: number = 5,
   client: boolean = false
 ): Promise<Item[]> => {
   var url = new URL(`http://${client ? "localhost" : "api"}:8000/items`);

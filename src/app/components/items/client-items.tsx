@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { Modal, Button } from "rsuite";
 import { Item } from "@/app/types";
@@ -33,18 +33,22 @@ export default function ClientItems({ items, categoryId }: IClientItems) {
   };
   const handleClose = () => setOpen(false);
 
+  const newPage = useCallback(async () => {
+    const newItems = await getItems(categoryId, page + 1, undefined, true);
+    setItemBag((p) => [...p, ...newItems]);
+    setPage((p) => p + 1);
+  }, [page]);
+
+  const newPageRef = useRef(newPage);
+  useEffect(() => {
+    newPageRef.current = newPage;
+  }, [newPage]);
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       async (entries) => {
         if (entries[0].isIntersecting) {
-          const newItems = await getItems(
-            categoryId,
-            page + 1,
-            undefined,
-            true
-          );
-          setPage((p) => p + 1);
-          setItemBag((p) => [...p, ...newItems]);
+          await newPageRef.current();
         }
       },
       { threshold: 1 }
@@ -59,7 +63,7 @@ export default function ClientItems({ items, categoryId }: IClientItems) {
         observer.unobserve(observerTarget.current);
       }
     };
-  }, [observerTarget, page]);
+  }, [observerTarget]);
   return (
     <>
       <div className="container relative grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-16 sm:gap-4 sm:gap-y-8 sm:mx-auto px-4">

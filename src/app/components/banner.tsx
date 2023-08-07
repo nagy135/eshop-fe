@@ -17,6 +17,7 @@ export default async function Banner() {
         <Image
           src={bannerUrl}
           width={500}
+          priority={true}
           height={500}
           className="w-full object-cover max-h-64 md:max-h-52"
           alt="Banner"
