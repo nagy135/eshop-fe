@@ -11,7 +11,7 @@ interface ICategories {
 
 export default function ClientCategories({ categories }: ICategories) {
   return (
-    <div className="w-full mt-2 font-bold text-lg">
+    <div className="flex justify-center w-full mt-2 font-bold text-lg">
       {categories.map((category, i) => (
         <Dropdown key={`category-group-${i}`} title={category.data.name}>
           {category.children &&
