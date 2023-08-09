@@ -1,3 +1,5 @@
+import { QueryParams } from "./types";
+
 export function throttle<U>(
   cb: (...args: any[]) => U,
   delay: number
@@ -6,11 +8,9 @@ export function throttle<U>(
 
   return async (...args: any[]) => {
     if (wait) {
-      console.log("================\n", "WAITING", "\n================");
       return;
     }
 
-    console.log("================\n", "FINE", "\n================");
     wait = true;
     const result = await cb(...args);
     setTimeout(() => {
@@ -18,4 +18,19 @@ export function throttle<U>(
     }, delay);
     return result;
   };
+}
+
+export function parseQueryParam(
+  param: QueryParams[keyof QueryParams]
+): string | undefined {
+  if (Array.isArray(param)) return param[0];
+  return param;
+}
+
+export function parseQueryParamNumber(
+  param: QueryParams[keyof QueryParams]
+): number | undefined {
+  if (Array.isArray(param)) return parseInt(param[0]);
+  if (!param) return;
+  return parseInt(param);
 }

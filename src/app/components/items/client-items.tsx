@@ -5,6 +5,7 @@ import Image from "next/image";
 import { Modal, Button } from "rsuite";
 import { Item } from "@/app/types";
 import { getItems } from "./items";
+import { usePathname, useSearchParams } from "next/navigation";
 
 interface IClientItems {
   items: Item[];
@@ -25,6 +26,19 @@ export default function ClientItems({ items, categoryId }: IClientItems) {
   const [open, setOpen] = useState(false);
   const [modalState, setModalState] = useState(defaultModalState);
 
+  const searchParams = useSearchParams()!;
+  const pathname = usePathname();
+
+  const createQueryString = useCallback(
+    (name: string, value: string) => {
+      const params = new URLSearchParams(searchParams.toString());
+      params.set(name, value);
+
+      return params.toString();
+    },
+    [searchParams]
+  );
+
   const observerTarget = useRef(null);
 
   const handleOpen = (item: Item) => {
@@ -37,6 +51,10 @@ export default function ClientItems({ items, categoryId }: IClientItems) {
     const newItems = await getItems(categoryId, page + 1, undefined, true);
     setItemBag((p) => [...p, ...newItems]);
     setPage((p) => p + 1);
+    const newUrl =
+      pathname + "?" + createQueryString("page", (page + 1).toString());
+
+    window.history.pushState({ path: newUrl }, "", newUrl);
   }, [page]);
 
   const newPageRef = useRef(newPage);

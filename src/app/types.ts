@@ -9,3 +9,5 @@ export type Item = {
   price: number;
   image__image: string[];
 };
+
+export type QueryParams = Record<string, string | string[] | undefined>;
