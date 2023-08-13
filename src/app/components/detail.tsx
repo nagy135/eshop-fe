@@ -3,13 +3,33 @@
 import { Button, Modal } from "rsuite";
 import { Item } from "../types";
 import Image from "next/image";
+import { useCallback } from "react";
+import { useSession } from "next-auth/react";
 
 interface IDetail {
   handleClose: any;
   open: boolean;
   item: Item;
 }
+
+const addItemToBucket = async (itemId: number, userId: number) => {};
+
 export default function Detail({ handleClose, item, open: isOpen }: IDetail) {
+  const { data: session } = useSession();
+
+  const handleBuy = useCallback(async () => {
+    if (!session) alert("not logged in");
+    else {
+      console.log(
+        "================\n",
+        "session: ",
+        session,
+        "\n================"
+      );
+      // await addItemToBucket();
+    }
+    handleClose();
+  }, [item, session]);
   return (
     <Modal open={isOpen} onClose={handleClose}>
       <Modal.Header>
@@ -44,7 +64,7 @@ export default function Detail({ handleClose, item, open: isOpen }: IDetail) {
           </Button>
 
           <Button
-            onClick={handleClose}
+            onClick={handleBuy}
             appearance="primary"
             className="bg-green-700"
             color="green"

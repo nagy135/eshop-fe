@@ -1,11 +1,5 @@
-import { Configuration } from "../types";
 import Link from "next/link";
-
-const getConfiguration = async (): Promise<Configuration> => {
-  return (
-    await fetch("http://api:8000/configuration", { cache: "no-cache" })
-  ).json();
-};
+import { getConfiguration } from "../queries/get-configuration";
 
 export default async function Banner() {
   const configuration = await getConfiguration();
