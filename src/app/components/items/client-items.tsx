@@ -2,11 +2,11 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { Modal, Button } from "rsuite";
+import { Button } from "rsuite";
 import { Item } from "@/app/types";
-import { getItems } from "./items";
 import { usePathname, useSearchParams } from "next/navigation";
 import Detail from "../detail";
+import { getItems } from "@/app/queries/get-items";
 
 interface IClientItems {
   items: Item[];
