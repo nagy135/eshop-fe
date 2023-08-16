@@ -10,4 +10,8 @@ export type Item = {
   image__image: string[];
 };
 
+export type User = {
+  id: number;
+};
+
 export type QueryParams = Record<string, string | string[] | undefined>;
