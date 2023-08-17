@@ -5,6 +5,7 @@ import { Item } from "../types";
 import Image from "next/image";
 import { useCallback } from "react";
 import { useSyncedUser } from "@/app/contexts/providers";
+import { addItemToBucket } from "../queries/add-item-to-basket";
 
 interface IDetail {
   handleClose: any;
@@ -12,25 +13,23 @@ interface IDetail {
   item: Item;
 }
 
-const addItemToBucket = async (itemId: number, userId: number) => {};
-
 export default function Detail({ handleClose, item, open: isOpen }: IDetail) {
   const user = useSyncedUser();
-  console.log("================\n", "user: ", user, "\n================");
+
+  const handleItemAdding = useCallback(
+    async (itemId: number, userId: number) => {
+      const bucketId = await addItemToBucket(itemId, userId);
+    },
+    []
+  );
 
   const handleBuy = useCallback(async () => {
-    // if (!session) alert("not logged in");
-    // else {
-    //   console.log(
-    //     "================\n",
-    //     "session: ",
-    //     session,
-    //     "\n================"
-    //   );
-    //   // await addItemToBucket();
-    // }
+    if (!user) alert("not logged in");
+    else {
+      await handleItemAdding(item.id, user.id);
+    }
     handleClose();
-  }, [item]);
+  }, [item, user]);
   return (
     <Modal open={isOpen} onClose={handleClose}>
       <Modal.Header>
