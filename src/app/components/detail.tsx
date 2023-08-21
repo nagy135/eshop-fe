@@ -4,7 +4,7 @@ import { Button, Modal } from "rsuite";
 import { Item } from "../types";
 import Image from "next/image";
 import { useCallback } from "react";
-import { useSyncedUser } from "@/app/contexts/providers";
+import { useBucketContext, useSyncedUser } from "@/app/contexts/providers";
 import { addItemToBucket } from "../queries/add-item-to-basket";
 
 interface IDetail {
@@ -15,10 +15,12 @@ interface IDetail {
 
 export default function Detail({ handleClose, item, open: isOpen }: IDetail) {
   const user = useSyncedUser();
+  const { setItems } = useBucketContext();
 
   const handleItemAdding = useCallback(
     async (itemId: number, userId: number) => {
       const bucketId = await addItemToBucket(itemId, userId);
+      setItems((e) => e);
     },
     []
   );

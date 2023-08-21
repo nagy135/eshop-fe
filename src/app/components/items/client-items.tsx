@@ -8,6 +8,7 @@ import { usePathname, useSearchParams } from "next/navigation";
 import Detail from "../detail";
 import { getItems } from "@/app/queries/get-items";
 import UserProvider from "@/app/contexts/user";
+import BucketProvider from "@/app/contexts/bucket";
 
 interface IClientItems {
   items: Item[];
@@ -116,7 +117,13 @@ export default function ClientItems({ items, categoryId }: IClientItems) {
         <div className="absolute bottom-0 h-[300px]" ref={observerTarget}></div>
       </div>
       {!!modalState.item ? (
-        <Detail handleClose={handleClose} open={open} item={modalState.item} />
+        <BucketProvider>
+          <Detail
+            handleClose={handleClose}
+            open={open}
+            item={modalState.item}
+          />
+        </BucketProvider>
       ) : null}
     </UserProvider>
   );

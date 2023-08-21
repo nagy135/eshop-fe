@@ -1,24 +1,25 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useSyncedUser } from "../contexts/providers";
+import { useEffect } from "react";
+import { useBucketContext, useSyncedUser } from "../contexts/providers";
 import { getBucket } from "../queries/get-bucket";
 import UserProvider from "../contexts/user";
-import { Item } from "../types";
+import BucketProvider from "../contexts/bucket";
 
 function Inner() {
   const user = useSyncedUser();
-  const [bucketItems, setBucketItems] = useState<Item[]>([]);
+  const { items, setItems } = useBucketContext();
+
   useEffect(() => {
     if (user) {
       getBucket(user.id)
-        .then((e) => setBucketItems(e))
+        .then((e) => setItems(e))
         .catch((e) => console.log(e));
     }
   }, [user]);
   return (
-    <div className="bg-red-50 absolute z-50 p-2 text-2xl rounded left-0 bottom-0">
-      <div>{bucketItems.length}</div>
+    <div className="bg-red-50 absolute z-50 p-2 w-10 text-center text-2xl rounded left-2 bottom-2 hover:bg-red-500 hover:text-yellow-400 cursor-pointer">
+      <div>{items ? items.length : 0}</div>
     </div>
   );
 }
@@ -26,7 +27,9 @@ function Inner() {
 export default function Bucket() {
   return (
     <UserProvider>
-      <Inner />
+      <BucketProvider>
+        <Inner />
+      </BucketProvider>
     </UserProvider>
   );
 }
