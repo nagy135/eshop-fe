@@ -11,6 +11,7 @@ export default function ItemTable() {
   return (
     <Table
       data={items}
+      autoHeight={true}
       onRowClick={(rowData) => {
         console.log(rowData);
       }}

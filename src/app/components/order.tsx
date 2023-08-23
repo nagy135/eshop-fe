@@ -9,7 +9,7 @@ export default function Order() {
   if (!bucketOpen) return null;
 
   return (
-    <Modal open={bucketOpen} onClose={() => setBucketOpen(false)}>
+    <Modal size={"full"} open={bucketOpen} onClose={() => setBucketOpen(false)}>
       <Modal.Header>
         <Modal.Title className="text-lg capitalize">Create Order</Modal.Title>
       </Modal.Header>
