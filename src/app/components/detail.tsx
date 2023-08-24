@@ -6,6 +6,8 @@ import Image from "next/image";
 import { useCallback } from "react";
 import { useBucketContext, useSyncedUser } from "@/app/contexts/providers";
 import { addItemToBucket } from "../queries/add-item-to-basket";
+import { useQueryClient } from "@tanstack/react-query";
+import { QueryKeys } from "../queries/enums";
 
 interface IDetail {
   handleClose: any;
@@ -17,10 +19,13 @@ export default function Detail({ handleClose, item, open: isOpen }: IDetail) {
   const user = useSyncedUser();
   const { setItems } = useBucketContext();
 
+  const queryClient = useQueryClient();
+
   const handleItemAdding = useCallback(
     async (itemId: number, userId: number) => {
       const bucketId = await addItemToBucket(itemId, userId);
       setItems((e) => e);
+      queryClient.invalidateQueries({ queryKey: [QueryKeys.BUCKET] });
     },
     []
   );
