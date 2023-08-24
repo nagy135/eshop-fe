@@ -23,7 +23,7 @@ function Inner() {
   }, [items]);
 
   return (
-    <div className="bg-red-50 absolute z-50 p-2 w-10 text-center text-2xl rounded left-2 bottom-2 hover:bg-red-500 hover:text-yellow-400 cursor-pointer">
+    <div className="fixed bg-red-50 z-50 p-2 w-10 text-center drop-shadow-xl shadow-black text-2xl rounded left-2 top-2 hover:bg-gray-400 hover:text-white cursor-pointer">
       <div className={items ? "" : "animate-spin"}>
         {items ? items.length : "⎈"}
       </div>
