@@ -8,6 +8,7 @@ import { useBucketContext, useSyncedUser } from "@/app/contexts/providers";
 import { addItemToBucket } from "../queries/add-item-to-basket";
 import { useQueryClient } from "@tanstack/react-query";
 import { QueryKeys } from "../queries/enums";
+import { toast } from "react-hot-toast";
 
 interface IDetail {
   handleClose: any;
@@ -23,8 +24,20 @@ export default function Detail({ handleClose, item, open: isOpen }: IDetail) {
 
   const handleItemAdding = useCallback(
     async (itemId: number, userId: number) => {
-      const bucketId = await addItemToBucket(itemId, userId);
+      const promise = addItemToBucket(itemId, userId);
+      toast.promise(promise, {
+        loading: "adding",
+        success: "Item added to bucket",
+        error: "Error during adding",
+      });
       setItems((e) => e);
+      const bucketId = await promise;
+      console.log(
+        "================\n",
+        "bucketId: ",
+        bucketId,
+        "\n================"
+      );
       queryClient.invalidateQueries({ queryKey: [QueryKeys.BUCKET] });
     },
     []

@@ -7,6 +7,7 @@ import Provider from "./provider";
 import Banner from "./components/banner";
 import Login from "./components/login";
 import Footer from "./components/footer";
+import { Toaster } from "react-hot-toast";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,6 +25,7 @@ export default function RootLayout({
     <html lang="en">
       <Provider>
         <body className={inter.className}>
+          <Toaster />
           <Banner />
           <Login />
           <Categories />
