@@ -75,21 +75,12 @@ export default function Detail({ handleClose, item, open: isOpen }: IDetail) {
       <Modal.Footer>
         <div className="m-2">
           <Button
-            onClick={handleClose}
-            appearance="primary"
-            className="bg-red-400"
-            color="red"
-          >
-            Cancel
-          </Button>
-
-          <Button
             onClick={handleBuy}
             appearance="primary"
-            className="bg-green-700"
+            className="bg-green-700 mt-2"
             color="green"
           >
-            Buy
+            Add to cart
           </Button>
         </div>
       </Modal.Footer>
