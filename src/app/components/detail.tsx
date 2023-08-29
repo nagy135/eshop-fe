@@ -5,7 +5,7 @@ import { Item } from "../types";
 import Image from "next/image";
 import { useCallback } from "react";
 import { useBucketContext, useSyncedUser } from "@/app/contexts/providers";
-import { addItemToBucket } from "../queries/add-item-to-basket";
+import { addItemToBucket } from "../queries/add-item-to-bucket";
 import { useQueryClient } from "@tanstack/react-query";
 import { QueryKeys } from "../queries/enums";
 import { toast } from "react-hot-toast";
