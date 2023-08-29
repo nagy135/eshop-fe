@@ -21,7 +21,9 @@ export function useSyncedUser() {
   useEffect(() => {
     if (!session?.user?.email) return;
 
-    useOrCreateUser(session.user.email).then((user) => setUser(user));
+    useOrCreateUser(session.user.email).then((user) => {
+      setUser(user);
+    });
   }, [session]);
 
   return user;

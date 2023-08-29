@@ -7,7 +7,6 @@ import { Item } from "@/app/types";
 import { usePathname, useSearchParams } from "next/navigation";
 import Detail from "../detail";
 import { getItems } from "@/app/queries/get-items";
-import UserProvider from "@/app/contexts/user";
 import Order from "../order";
 
 interface IClientItems {
@@ -86,7 +85,7 @@ export default function ClientItems({ items, categoryId }: IClientItems) {
     };
   }, [observerTarget]);
   return (
-    <UserProvider>
+    <>
       <div className="container relative grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-16 sm:gap-4 sm:gap-y-8 sm:mx-auto px-4">
         {itemBag.map((item, i) => (
           <div
@@ -120,6 +119,6 @@ export default function ClientItems({ items, categoryId }: IClientItems) {
         <Detail handleClose={handleClose} open={open} item={modalState.item} />
       ) : null}
       <Order />
-    </UserProvider>
+    </>
   );
 }
